@@ -19,15 +19,18 @@ namespace MyLogin
             LoginButton.IsEnabled = false;
 
             var task = Task.Run(() =>
-                                {
-                                    Thread.Sleep(2000);
-                                });
+            {
+                Thread.Sleep(2000);
+            });
 
             task.ContinueWith((t) => 
             {
                 try
                 {
-                    LoginButton.IsEnabled = true;
+                    Dispatcher.Invoke(() =>
+                    {
+                        LoginButton.IsEnabled = true;
+                    });
                 }
                 catch (Exception ex)
                 {
