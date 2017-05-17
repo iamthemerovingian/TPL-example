@@ -21,7 +21,9 @@ namespace MyLogin
             var task = Task.Run(() =>
             {
                 Thread.Sleep(2000);
+                return "Login Succesful!!";
             });
+
 
             task.ContinueWith((t) => 
             {
@@ -29,6 +31,7 @@ namespace MyLogin
                 {
                     Dispatcher.Invoke(() =>
                     {
+                        LoginButton.Content = task.Result;
                         LoginButton.IsEnabled = true;
                     });
                 }
