@@ -16,7 +16,24 @@ namespace MyLogin
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            Thread.Sleep(10000);
+            LoginButton.IsEnabled = false;
+
+            var task = Task.Run(() =>
+                                {
+                                    Thread.Sleep(2000);
+                                });
+
+            task.ContinueWith((t) => 
+            {
+                try
+                {
+                    LoginButton.IsEnabled = true;
+                }
+                catch (Exception ex)
+                {
+                    
+                }
+            });
         }
     }
 }
