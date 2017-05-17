@@ -20,38 +20,19 @@ namespace MyLogin
 
             var task = Task.Run(() =>
             {
-                throw new UnauthorizedAccessException();
                 Thread.Sleep(2000);
                 return "Login Succesful!!";
             });
 
+            task.ConfigureAwait(true)
+                .GetAwaiter()
+                .OnCompleted(()=>
+                {
+                    LoginButton.Content = task.Result;
+                    LoginButton.IsEnabled = true;
+                });
 
-            task.ContinueWith((t) => 
-            {
-                try
-                {
-                    if (t.IsFaulted)
-                    {
-                        Dispatcher.Invoke(() =>
-                        {
-                            LoginButton.Content = "Login Failed";
-                            LoginButton.IsEnabled = true;
-                        });
-                    }
-                    else
-                    {
-                        Dispatcher.Invoke(() =>
-                        {
-                            LoginButton.Content = t.Result;
-                            LoginButton.IsEnabled = true;
-                        });
-                    }
-                }
-                catch (Exception ex)
-                {
-                    
-                }
-            });
+           
         }
     }
 }
